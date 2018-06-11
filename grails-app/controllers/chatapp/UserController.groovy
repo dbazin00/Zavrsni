@@ -62,8 +62,29 @@ class UserController {
         [persons:persons]
     }
 
+    //update profila
+    def myProfile()
+    {
+        if(session.currentUserID == null)
+            redirect(view: 'index')
+        def userProfile = DataUser.findById(session.currentUserID)
+
+        [userProfile: userProfile]
+    }
+
+    def saveProfile()
+    {
+        if(session.currentUserID == null)
+            redirect(view: 'index')
+        def saveUser = DataUser.findById(session.currentUserID)
+
+        saveUser.first_name = params.first_name
+        saveUser.save(flush:true)
+        redirect(action: 'myProfile')
+    }
     def userInformation()
     {
+        DataUser userInfo = params.person
     }
 
 }

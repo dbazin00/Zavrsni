@@ -47,7 +47,7 @@
         <input type="email" class="form-control" id="mail" style="width: 500px;"  name="mail" required="" >
     </div>
     <div class="form-group">
-        <label for="last_name">Password</label><br>
+        <label for="password">Password</label><br>
         <input type="password" class="password" id="password" style="width: 500px;"  name="password" required="" >
     </div>
     <div class="form-group">

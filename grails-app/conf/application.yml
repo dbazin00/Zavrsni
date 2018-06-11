@@ -93,7 +93,7 @@ dataSource:
     jmxExport: true
     driverClassName: org.postgresql.Driver
     username: 'postgres'
-    password: 'Davor'
+    password: 'post123'
 
 environments:
     development:
