@@ -28,10 +28,7 @@
 <h1><center>Welcome!</center></h1>
 <h2><center>This is your profile</center></h2>
 <form>
-    <g:form>
-        <g:if test = "${session.currentUserID == null}">
-            <g:link controller="user" action="login">My profile</g:link>
-        </g:if>
+    <g:form action="myProfile">
         <div class="form-group">
             <label>Username</label>
             <br>
@@ -57,7 +54,6 @@
             <g:formatDate format="d. M. yyyy." date="${userProfile.birthday}"/>
         </div>
 
-    %{--<button type="submit" class="btn btn-default">Send</button>--}%
         <label class="saveBTN"><g:actionSubmit value="Update profile" class="saveBtn" action="saveProfile"></g:actionSubmit></label>
     </g:form>
 </form>

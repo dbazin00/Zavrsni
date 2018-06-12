@@ -1,7 +1,5 @@
 package chatapp
 
-import javax.xml.crypto.Data
-
 class UserController {
     def dataUserService
 //    def messageService
@@ -49,8 +47,14 @@ class UserController {
 
     def registrateNewUser()
     {
-        dataUserService.registerUser(params.first_name, params.last_name, params.username, params.password, params.mail, new Date())
-        redirect(view: 'index')
+        try {
+            dataUserService.registerUser(params.first_name, params.last_name, params.username, params.password, params.mail, new Date())
+            redirect(view: 'index')
+        }
+        catch(Exception e)
+        {
+            redirect(view: 'index')
+        }
     }
 
     //lista svih korisnika osim prijavljenog
@@ -58,6 +62,7 @@ class UserController {
     {
         if(session.currentUserID == null)
             redirect(view: 'index')
+
         def persons = DataUser.findAllByIdNotEqual(session.currentUserID).toList()
         [persons:persons]
     }
@@ -67,9 +72,10 @@ class UserController {
     {
         if(session.currentUserID == null)
             redirect(view: 'index')
-        def userProfile = DataUser.findById(session.currentUserID)
-
-        [userProfile: userProfile]
+        else {
+            def userProfile = DataUser.findById(session.currentUserID)
+            [userProfile: userProfile]
+        }
     }
 
     def saveProfile()
@@ -82,9 +88,11 @@ class UserController {
         saveUser.save(flush:true)
         redirect(action: 'myProfile')
     }
+
     def userInformation()
     {
-        DataUser userInfo = params.person
+        DataUser userInfo = new DataUser(params.person)
+        println userInfo.username
     }
 
 }

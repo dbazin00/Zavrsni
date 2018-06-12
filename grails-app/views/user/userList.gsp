@@ -21,7 +21,7 @@
 <g:each in="${persons}" var="person" status="i">
     <div class="row">
         <div class="col-sm-4"><h3>${i+1}.</h3></div>
-        <div class="col-sm-4"><h3><g:link action="userInformation" params="persons[1]">${person.username}</g:link></h3></div>
+        <div class="col-sm-4"><h3><g:link action="userInformation" params="${[user: person]}">${person.username}</g:link></h3></div>
         <div class="col-sm-4"><h3><g:formatDate format="d. M. yyyy." date="${person.birthday}"/></h3></div>
     </div>
 </g:each>

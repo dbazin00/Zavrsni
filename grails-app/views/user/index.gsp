@@ -22,7 +22,7 @@
             float: right;
         }
         </style>
-    </head>s
+    </head>
     <body>
 
         ${flash.message}
