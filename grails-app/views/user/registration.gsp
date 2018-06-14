@@ -56,7 +56,7 @@
     </div>
 
 %{--<button type="submit" class="btn btn-default">Send</button>--}%
-    <label class="regBTN"><g:actionSubmit value="Registrate" class="regBtn" action="registrateNewUser"></g:actionSubmit></label>
+    <label class="regBTN"><g:actionSubmit value="Register" class="regBtn" action="registrateNewUser"></g:actionSubmit></label>
 </g:form>
 </form>
 </body>

@@ -1,12 +1,15 @@
 package chatapp
 
 class DataUser {
+    static transients = ['age']
+
     String username
     String mail
     String first_name
     String last_name
     String password
     Date birthday
+    Integer age
 //    String birthplace
     static constraints = {
         username(unique: true)

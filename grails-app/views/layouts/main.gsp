@@ -43,7 +43,7 @@
 
     <g:layoutBody/>
 
-    <center><div class="footer" role="contentinfo"><g:formatDate format="dd-MM-yyyy" date="${new Date()}"/></div></center>
+    <center><div class="footer" role="contentinfo">&#169;<g:formatDate format="dd-MM-yyyy" date="${new Date()}"/></div></center>
 
     <div id="spinner" class="spinner" style="display:none;">
         <g:message code="spinner.alt" default="Loading&hellip;"/>

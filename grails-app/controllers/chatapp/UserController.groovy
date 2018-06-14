@@ -46,9 +46,9 @@ class UserController {
     def registration() {}
 
     def registrateNewUser()
-    {
+    {//new Date().parse("yyyy-MM-dd",params["birthday"])
         try {
-            dataUserService.registerUser(params.first_name, params.last_name, params.username, params.password, params.mail, new Date())
+            dataUserService.registerUser(params.first_name, params.last_name, params.username, params.password, params.mail, new Date().parse("yyyy-MM-dd", params["birthday"]))
             redirect(view: 'index')
         }
         catch(Exception e)
@@ -64,7 +64,20 @@ class UserController {
             redirect(view: 'index')
 
         def persons = DataUser.findAllByIdNotEqual(session.currentUserID).toList()
+
+        for (int i = 0; i < persons.size(); i++) {
+            persons[i].age = new Date().year - persons[i].birthday.year
+        }
+
         [persons:persons]
+        //transients
+    }
+
+
+    def userInformation()
+    {
+        def userInfo = DataUser.findById(params.id)
+        [userInf: userInfo]
     }
 
     //update profila
@@ -89,10 +102,5 @@ class UserController {
         redirect(action: 'myProfile')
     }
 
-    def userInformation()
-    {
-        DataUser userInfo = new DataUser(params.person)
-        println userInfo.username
-    }
 
 }

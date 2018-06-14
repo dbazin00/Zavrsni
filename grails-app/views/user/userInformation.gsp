@@ -7,15 +7,35 @@
         font-size:35px;
         font-weight: bold;
     }
+    .form-group
+    {
+        padding-left: 30px;
+    }
+
     </style>
 </head>
 <body>
 <br/>
-<h1><center>asd</center></h1>
-<div class="row">
-    <div class="col-sm-4"><h3><b>NO</b></h3></div>
-    <div class="col-sm-4"><h3><b>USERNAME</b></h3></div>
-    <div class="col-sm-4"><h3><b>AGE</b></h3></div>
+<h1><center>${userInf.username}</center></h1>
+
+<div class="form-group">
+    <label>First name</label>
+    <br>
+    ${userInf.first_name}
 </div>
+
+<div class="form-group">
+    <label>Last name</label>
+    <br>
+    ${userInf.last_name}
+</div>
+
+<div class="form-group">
+    <label>Birthday</label>
+    <br>
+    <g:formatDate format="d. M. yyyy." date="${userInf.birthday}"/>
+</div>
+
+
 </body>
 </html>
