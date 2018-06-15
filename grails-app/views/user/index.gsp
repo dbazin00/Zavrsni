@@ -30,8 +30,8 @@
             <div style="width:220px">
                 <label>Name:</label> <input type="text" name="username" class="inputClass"/>
                 <label>Password:</label> <input type="password" name="password" class="inputClass"/>
-                <label class="btn-login"> <input type="submit" name="Login" value="Login"/></label><br/>
-                <label class="btn-reg"> <g:actionSubmit type="submit" name="Registrate" value="Registrate" action="registration"/></label>
+                <label class="btn-login"> <input type="submit" name="Login" value="Login"/></label>
+                <label class="btn-reg"> <g:actionSubmit type="submit" name="Register" value="Register" action="registration"/></label>
             </div>
         </g:form>
     </body>

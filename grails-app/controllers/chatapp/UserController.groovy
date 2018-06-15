@@ -45,7 +45,7 @@ class UserController {
     //registracija novih korisnika
     def registration() {}
 
-    def registrateNewUser()
+    def registerNewUser()
     {//new Date().parse("yyyy-MM-dd",params["birthday"])
         try {
             dataUserService.registerUser(params.first_name, params.last_name, params.username, params.password, params.mail, new Date().parse("yyyy-MM-dd", params["birthday"]))
@@ -76,8 +76,17 @@ class UserController {
 
     def userInformation()
     {
-        def userInfo = DataUser.findById(params.id)
-        [userInf: userInfo]
+        try {
+            if (session.currentUserID == null) {
+                redirect(view: 'index')
+            }
+            def userInfo = DataUser.findByUsername(params.id)
+            [userInf: userInfo]
+        }
+        catch(Exception e)
+        {
+            redirect(view: 'index')
+        }
     }
 
     //update profila
