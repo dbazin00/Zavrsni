@@ -30,12 +30,15 @@
             </div>
             <div class="navbar-collapse collapse" aria-expanded="false" style="height: 0.8px;">
                 <ul class="nav navbar-nav navbar-left">
-                    <li><a href="/user/UserList">User List</a></li>
+                    <li><g:link controller="user" action="userList">User list</g:link></li>
                     <li><g:link controller="user" action="myProfile">My profile</g:link></li>
+                    <li><g:link controller="user" action="allConversations">Messages</g:link></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <g:pageProperty name="page.nav" />
-                    <li><g:link controller="user" action="logout" onclick="return confirm('Are you sure you want to logout?')">Logout</g:link></li>
+                    <g:if test="${session.currentUserID != null}">
+                        <li><g:link controller="user" action="logout" onclick="return confirm('Are you sure you want to logout?')">Logout</g:link></li>
+                    </g:if>
                 </ul>
             </div>
         </div>

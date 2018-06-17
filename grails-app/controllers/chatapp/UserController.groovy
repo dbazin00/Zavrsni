@@ -1,10 +1,12 @@
 package chatapp
 
+import groovy.sql.Sql
+
 class UserController {
     def dataUserService
-//    def messageService
+    def messageService
 //    def DataUserService
-
+    def dataSource
     def index() {
 
     }
@@ -111,5 +113,21 @@ class UserController {
         redirect(action: 'myProfile')
     }
 
+    def allConversations()
+    {
+        def sid = session.currentUserID
+        def allUsers = DataUser.findAllByIdNotEqual(sid).toList()
+        def sql = new Sql(dataSource)
+        def allConvers = []
 
+        for(int i = 0; i < allUsers.size(); i++) {
+            def rows = sql.firstRow("SELECT * from message WHERE (receiver_id = " + sid + " OR receiver_id =" + allUsers[i].id + ") AND (sender_id = " + sid + " OR sender_id = " + allUsers[i].id + ") ORDER BY id DESC")
+            if(rows != null)
+            allConvers.add(rows)
+        }
+
+        sql.close()
+
+        [allConvers: allConvers]
+    }
 }

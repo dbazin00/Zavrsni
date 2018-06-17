@@ -7,5 +7,10 @@ class Message {
     DataUser receiver
     boolean read
     static constraints = {
+        message_text()
+        send_date()
+        sender()
+        receiver()
+        read()
     }
 }
