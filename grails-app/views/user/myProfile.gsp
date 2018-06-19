@@ -14,7 +14,7 @@
     .saveBtn
     {
 
-        width: 500px;
+        width: 230px;
     }
     .saveBTN
     {
@@ -37,12 +37,12 @@
 
         <div class="form-group">
             <label for="first_name">First name</label>
-            <input type="text" id="first_name" class="form-control" style="width:500px;"name="first_name" value="${userProfile.first_name}" required="">
+            <input type="text" id="first_name" class="form-control" style="width:230px;"name="first_name" value="${userProfile.first_name}" required="">
         </div>
 
         <div class="form-group">
             <label for="last_name">Last name</label>
-            <input type="text" class="form-control" id="last_name" style="width: 500px;"  name="last_name" value="${userProfile.last_name}" required="" >
+            <input type="text" class="form-control" id="last_name" style="width: 230px;"  name="last_name" value="${userProfile.last_name}" required="" >
         </div>
         <div class="form-group">
             <label>E-mail</label>

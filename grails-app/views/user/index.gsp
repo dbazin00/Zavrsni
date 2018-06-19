@@ -23,11 +23,13 @@
             float: right;
         }
         </style>
+
+
     </head>
     <body>
 
         ${flash.message}
-        <g:form action="login" style="padding-left:200px" >
+        <g:form action="login" style="padding-left:20px" >
             <div style="width:220px">
                 <label>Name:</label> <input type="text" name="username" class="inputClass"/>
                 <label>Password:</label> <input type="password" name="password" class="inputClass"/>

@@ -5,7 +5,6 @@ import groovy.sql.Sql
 class UserController {
     def dataUserService
     def messageService
-//    def DataUserService
     def dataSource
     def index() {
 
@@ -115,6 +114,9 @@ class UserController {
 
     def allConversations()
     {
+        if (session.currentUserID == null) {
+            redirect(view: 'index')
+        }
         def sid = session.currentUserID
         def allUsers = DataUser.findAllByIdNotEqual(sid).toList()
         def sql = new Sql(dataSource)
@@ -128,6 +130,24 @@ class UserController {
 
         sql.close()
 
+//        allConvers.sort()
         [allConvers: allConvers]
+    }
+
+    def allMessages()
+    {
+        def sid = session.currentUserID
+
+        def sql = new Sql(dataSource)
+
+        def messages = sql.rows("SELECT * from message WHERE (receiver_id = " + sid + " OR receiver_id =" + params.id + ") AND (sender_id = " + sid + " OR sender_id = " + params.id + ") ORDER BY id DESC")
+
+
+
+        sql.close()
+
+        messages.sort()
+        [messages: messages]
+
     }
 }

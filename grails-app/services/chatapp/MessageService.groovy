@@ -10,9 +10,4 @@ class MessageService {
 //        m.save(flush:true);
     }
 
-    def readMessages(Integer sid)
-    {
-        def res = Message.findAllByReceiver(sid).toList()
-        return [res]
-    }
 }
