@@ -5,7 +5,6 @@ import groovy.sql.Sql
 class UserController {
     def dataUserService
     def messageService
-//    def messageReading
     def dataSource
     def index() {
 
@@ -133,7 +132,7 @@ class UserController {
                 allConvers.add(rows)
         }
 
-        //spremanje broja neporccitanih razgovora u transients
+        //spremanje broja neprocitanih razgovora u transients
 
         for(int i = 0; i < allConvers.size(); i++)
         {
