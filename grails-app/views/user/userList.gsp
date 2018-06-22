@@ -14,12 +14,15 @@
 <br/>
 <h1><center>ALL USERS</center></h1>
 <table class="display">
+    <thead>
     <tr>
+        %{--<g:sortableColumn property="username" title="user" />--}%
     <th><h3><b>NO</b></h3></th>
     <th><h3><b>USERNAME</b></h3></th>
     <th><h3><b>AGE</b></h3></th>
     </tr>
-
+</thead>
+    <tbody>
 <g:each in="${persons}" var="person" status="i">
         <tr>
             <td><h3>${i+1}.</h3></td>
@@ -29,6 +32,7 @@
 
 
 </g:each>
+    </tbody>
 </table>
 </body>
 </html>

@@ -5,6 +5,7 @@ import groovy.sql.Sql
 class UserController {
     def dataUserService
     def messageService
+//    def messageReading
     def dataSource
     def index() {
 
@@ -64,7 +65,7 @@ class UserController {
         if(session.currentUserID == null)
             redirect(view: 'index')
 
-        def persons = DataUser.findAllByIdNotEqual(session.currentUserID).toList()
+        def persons = DataUser.findAllByIdNotEqual(session.currentUserID)
 
         for (int i = 0; i < persons.size(); i++) {
             persons[i].age = new Date().year - persons[i].birthday.year
@@ -117,37 +118,87 @@ class UserController {
         if (session.currentUserID == null) {
             redirect(view: 'index')
         }
+
         def sid = session.currentUserID
         def allUsers = DataUser.findAllByIdNotEqual(sid).toList()
         def sql = new Sql(dataSource)
         def allConvers = []
 
+
+        //trazenje zadnje poruke razgovora izmedu dva korisnika
         for(int i = 0; i < allUsers.size(); i++) {
-            def rows = sql.firstRow("SELECT * from message WHERE (receiver_id = " + sid + " OR receiver_id =" + allUsers[i].id + ") AND (sender_id = " + sid + " OR sender_id = " + allUsers[i].id + ") ORDER BY id DESC")
+
+            def rows = sql.firstRow("SELECT * from message WHERE (receiver_id = " + sid + " OR receiver_id =" + allUsers[i].id + ") AND (sender_id = " + sid + " OR sender_id = " + allUsers[i].id + ") ORDER BY send_date DESC")
             if(rows != null)
-            allConvers.add(rows)
+                allConvers.add(rows)
+        }
+
+        //spremanje broja neporccitanih razgovora u transients
+
+        for(int i = 0; i < allConvers.size(); i++)
+        {
+            if(allConvers[i].receiver_id == sid)
+            {
+                allConvers[i].unreadMessages = Message.countByReadAndReceiverAndSender(false, DataUser.findById(allConvers[i].receiver_id), DataUser.findById(allConvers[i].sender_id))
+            }
+            else
+            {
+                allConvers[i].unreadMessages = Message.countByReadAndReceiverAndSender(false, DataUser.findById(allConvers[i].sender_id), DataUser.findById(allConvers[i].receiver_id))
+            }
         }
 
         sql.close()
 
-//        allConvers.sort()
+        allConvers = allConvers.sort{ it.send_date}.reverse()
+
         [allConvers: allConvers]
     }
 
     def allMessages()
     {
         def sid = session.currentUserID
-
+        session.chatFriend = params.id
+        def fid = session.chatFriend
         def sql = new Sql(dataSource)
 
-        def messages = sql.rows("SELECT * from message WHERE (receiver_id = " + sid + " OR receiver_id =" + params.id + ") AND (sender_id = " + sid + " OR sender_id = " + params.id + ") ORDER BY id DESC")
+        //dohvacanje svih poruka izmedju dva korisnika
 
+        def messages = sql.rows("SELECT * from message WHERE (receiver_id = " + sid + " OR receiver_id =" + params.id + ") AND (sender_id = " + sid + " OR sender_id = " + params.id + ") ORDER BY send_date DESC").toList()
+
+
+        def userS = DataUser.findById(sid)
+        def userF = DataUser.findById(fid)
+
+        //poruka procitana
+
+        def messageRead = Message.findAllByReceiverAndSender(userS, userF)
+        messageRead.each {
+            it.read = true
+            it.save(flush:true)
+        }
+
+        messageRead.each {
+        it.read = true
+        it.save(flush: true)
+    }
 
 
         sql.close()
 
-        messages.sort()
         [messages: messages]
 
+}
+
+    def sendMessage()
+    {
+        if(params.message_body != '') {
+            def sender = DataUser.findById(session.currentUserID)
+            def receiver = DataUser.findById(session.chatFriend)
+            messageService.createNewMessage(sender, receiver, params.message_body)
+            redirect(action: 'allMessages', id: session.chatFriend)
+        }
+        else {
+            redirect(action: 'allMessages', id: session.chatFriend)
+        }
     }
 }
