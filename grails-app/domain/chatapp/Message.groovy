@@ -9,13 +9,13 @@ class Message {
     DataUser receiver
     boolean read
     Integer unreadMessages
-//    byte[] filedata
+    byte[] filedata
     static constraints = {
         message_text()
         send_date()
         sender()
         receiver()
         read()
-//        filedata()
+        filedata(maxSize: 1024 * 1024 * 20, nullable: true)
     }
 }

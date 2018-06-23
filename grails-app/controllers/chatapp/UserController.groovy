@@ -70,7 +70,7 @@ class UserController {
             persons[i].age = new Date().year - persons[i].birthday.year
         }
 
-        [persons:persons]
+        [persons:DataUser.where{id != session.currentUserID}.list(params)]
         //transients
     }
 
@@ -164,6 +164,9 @@ class UserController {
 
         def messages = sql.rows("SELECT * from message WHERE (receiver_id = " + sid + " OR receiver_id =" + params.id + ") AND (sender_id = " + sid + " OR sender_id = " + params.id + ") ORDER BY send_date DESC").toList()
 
+        messages.each {
+            println (it.filedata)
+        }
 
         def userS = DataUser.findById(sid)
         def userF = DataUser.findById(fid)
@@ -193,7 +196,9 @@ class UserController {
         if(params.message_body != '') {
             def sender = DataUser.findById(session.currentUserID)
             def receiver = DataUser.findById(session.chatFriend)
-            messageService.createNewMessage(sender, receiver, params.message_body)
+            def fileUser = params.userFile
+            println fileUser.getBytes()
+            messageService.createNewMessage(sender, receiver, params.message_body, fileUser.getBytes())
             redirect(action: 'allMessages', id: session.chatFriend)
         }
         else {

@@ -22,7 +22,9 @@
 
     <table class="display">
         <td width="150px"><h3>${chatapp.DataUser.findById(mess.sender_id).username}</h3><td>
-        <td width="400px"><h3><center>${mess.message_text}</center></h3></td>
+        <td width="400px"><h3><center>${mess.message_text}</center></h3>
+        <center>${mess.filedata}</center>
+        </td>
 
         <td><h3><g:formatDate format="d. M. yyyy. H:mm" date="${mess.send_date}"/></h3></td>
     </table>

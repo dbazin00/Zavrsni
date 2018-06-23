@@ -16,9 +16,10 @@
 <table class="display">
     <thead>
     <tr>
-        %{--<g:sortableColumn property="username" title="user" />--}%
-    <th><h3><b>NO</b></h3></th>
-    <th><h3><b>USERNAME</b></h3></th>
+
+
+    %{--<th><h3><b>NO</b></h3></th>--}%
+    <th><h3><b>Sort by:<g:sortableColumn property="username" title="USERNAME" /></b></h3>        </th>
     <th><h3><b>AGE</b></h3></th>
     </tr>
 </thead>

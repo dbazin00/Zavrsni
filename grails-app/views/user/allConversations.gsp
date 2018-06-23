@@ -31,9 +31,10 @@
         <g:if test="${session.currentUserID == con.receiver_id}">
             <td width="150px"><h3>${chatapp.DataUser.findById(con.sender_id).username}</h3></td>
                 <g:if test="${con.unreadMessages  != 0}">
-                    <td width="400px"><b><g:link action="allMessages" id="${con.sender_id}">${con.message_text} </g:link></b>
-                        <div id="unreadMess"> ${con.unreadMessages}</div>
+                    <td width="380px"><b><g:link action="allMessages" id="${con.sender_id}">${con.message_text} </g:link></b>
                     </td>
+                    <td width="20px"><div id="unreadMess"> ${con.unreadMessages}</div></td>
+
                 </g:if>
                 <g:else>
                     <td width="400px"><g:link action="allMessages" id="${con.sender_id}">${con.message_text} </g:link></td>
