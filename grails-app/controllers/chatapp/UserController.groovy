@@ -64,13 +64,13 @@ class UserController {
         if(session.currentUserID == null)
             redirect(view: 'index')
 
-        def persons = DataUser.findAllByIdNotEqual(session.currentUserID)
+        def persons = DataUser.where{id != session.currentUserID}.list(params)
 
         for (int i = 0; i < persons.size(); i++) {
             persons[i].age = new Date().year - persons[i].birthday.year
         }
 
-        [persons:DataUser.where{id != session.currentUserID}.list(params)]
+        [persons:persons]
         //transients
     }
 
@@ -197,7 +197,7 @@ class UserController {
             def sender = DataUser.findById(session.currentUserID)
             def receiver = DataUser.findById(session.chatFriend)
             def fileUser = params.userFile
-            println fileUser.getBytes()
+//            println fileUser.getBytes()
             messageService.createNewMessage(sender, receiver, params.message_body, fileUser.getBytes())
             redirect(action: 'allMessages', id: session.chatFriend)
         }
