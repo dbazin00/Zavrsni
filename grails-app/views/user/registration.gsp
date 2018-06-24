@@ -54,8 +54,11 @@
         <label for="birthday">Birthday</label><br>
         <input type="date" class="birthday" id="birthday" style="width: 230px;"  name="birthday" required="" >
     </div>
+    <div class="form-group">
+        <label for="birthplace">Birthplace</label><br>
+        <g:select name="birthplace" from="['Zagreb', 'Split', 'Osijek', 'Rijeka', 'Other']"/>
 
-%{--<button type="submit" class="btn btn-default">Send</button>--}%
+    </div>
     <label class="regBTN"><g:actionSubmit value="Register" class="regBtn" action="registerNewUser"></g:actionSubmit></label>
 </g:form>
 

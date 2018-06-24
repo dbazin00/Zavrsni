@@ -49,7 +49,7 @@ class UserController {
     def registerNewUser()
     {//new Date().parse("yyyy-MM-dd",params["birthday"])
         try {
-            dataUserService.registerUser(params.first_name, params.last_name, params.username, params.password, params.mail, new Date().parse("yyyy-MM-dd", params["birthday"]))
+            dataUserService.registerUser(params.first_name, params.last_name, params.username, params.password, params.mail, new Date().parse("yyyy-MM-dd", params["birthday"]), params.birthplace)
             redirect(view: 'index')
         }
         catch(Exception e)
@@ -108,6 +108,8 @@ class UserController {
         def saveUser = DataUser.findById(session.currentUserID)
 
         saveUser.first_name = params.first_name
+        saveUser.last_name = params.last_name
+        saveUser.birthplace = params.birthplace
         saveUser.save(flush:true)
         redirect(action: 'myProfile')
     }

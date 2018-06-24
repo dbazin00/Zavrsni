@@ -54,6 +54,11 @@
             <g:formatDate format="d. M. yyyy." date="${userProfile.birthday}"/>
         </div>
 
+        <div class="form-group">
+            <label>Birthplace</label><br>
+            <g:select name="birthplace" from="['Zagreb', 'Split', 'Osijek', 'Rijeka', 'Other']" value="${userProfile.birthplace}"/>
+        </div>
+
         <label class="saveBTN"><g:actionSubmit value="Update profile" class="saveBtn" action="saveProfile"></g:actionSubmit></label>
     </g:form>
 </form>

@@ -35,6 +35,13 @@
     <br>
     <g:formatDate format="d. M. yyyy." date="${userInf.birthday}"/>
 </div>
+
+<div class="form-group">
+    <label>Birthplace</label>
+    <br>
+    ${userInf.birthplace}
+</div>
+
 <label class="form-group"><g:link action="allMessages" id="${userInf.id}">Send message</g:link></label>
 
 </body>

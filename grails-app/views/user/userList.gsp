@@ -15,24 +15,20 @@
 <h1><center>ALL USERS</center></h1>
 <table class="display">
     <thead>
-    <tr>
-
-
-    %{--<th><h3><b>NO</b></h3></th>--}%
-    <th><h3><b>Sort by:<g:sortableColumn property="username" title="USERNAME" /></b></h3>        </th>
-    <th><h3><b>AGE</b></h3></th>
-    </tr>
-</thead>
-    <tbody>
-<g:each in="${persons}" var="person" status="i">
         <tr>
-            <td><h3>${i+1}.</h3></td>
-        <td><h3><g:link action="userInformation" id="${person.username}">${person.username}</g:link></h3></td>
-        <td><h3>${person.age}</h3></td>
-    </tr>
-
-
-</g:each>
+            <g:sortableColumn property="username" title="USERNAME" />
+            <g:sortableColumn property="birthplace" title="BIRTHPLACE" />
+            <th><b>AGE</b></th>
+        </tr>
+    </thead>
+    <tbody>
+        <g:each in="${persons}" var="person">
+            <tr>
+                <td><h3><g:link action="userInformation" id="${person.username}">${person.username}</g:link></h3></td>
+                <td><h3>${person.birthplace}</h3></td>
+                <td><h3>${person.age}</h3></td>
+            </tr>
+        </g:each>
     </tbody>
 </table>
 </body>
