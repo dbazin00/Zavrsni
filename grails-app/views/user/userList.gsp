@@ -13,12 +13,20 @@
 
 <br/>
 <h1><center>ALL USERS</center></h1>
+<fieldset class="form">
+    <g:form action="userList" method="GET">
+        <div class="fieldcontain">
+            <label for="query">Search for users:</label>
+            <g:textField name="query" value="${params.query}"/>
+        </div>
+    </g:form>
+</fieldset>
 <table class="display">
     <thead>
         <tr>
             <g:sortableColumn property="username" title="USERNAME" />
             <g:sortableColumn property="birthplace" title="BIRTHPLACE" />
-            <th><b>AGE</b></th>
+            <g:sortableColumn property="birthday" title="Age" />
         </tr>
     </thead>
     <tbody>

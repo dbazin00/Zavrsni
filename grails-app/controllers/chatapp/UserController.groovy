@@ -64,8 +64,14 @@ class UserController {
         if(session.currentUserID == null)
             redirect(view: 'index')
 
-        def persons = DataUser.where{id != session.currentUserID}.list(params)
 
+        //svi korisnici koji su razliciti od orijavljenog i search
+        def persons = DataUser.createCriteria().list (params) {
+            if (params.query) {
+                ilike("username", "%${params.query}%")
+            }
+            not{idEq(session.currentUserID) }
+        }
         for (int i = 0; i < persons.size(); i++) {
             persons[i].age = new Date().year - persons[i].birthday.year
         }
