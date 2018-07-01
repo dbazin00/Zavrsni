@@ -28,7 +28,7 @@
     </head>
     <body>
 
-        ${flash.message}
+    <font color="red">${flash.message}</font>
         <g:form action="login" style="padding-left:20px" >
             <div style="width:220px">
                 <label>Name:</label> <input type="text" name="username" class="inputClass"/>

@@ -9,6 +9,7 @@ class Message {
     DataUser receiver
     boolean read
     Integer unreadMessages
+    String filename
     byte[] filedata
     static constraints = {
         message_text()
@@ -16,6 +17,7 @@ class Message {
         sender()
         receiver()
         read()
+        filename(nullable: true)
         filedata(maxSize: 1024 * 1024 * 20, nullable: true)
     }
 }

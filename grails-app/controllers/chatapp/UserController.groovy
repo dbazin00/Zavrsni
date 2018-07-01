@@ -44,7 +44,8 @@ class UserController {
     }
 
     //registracija novih korisnika
-    def registration() {}
+    def registration() {
+    }
 
     def registerNewUser()
     {//new Date().parse("yyyy-MM-dd",params["birthday"])
@@ -54,7 +55,8 @@ class UserController {
         }
         catch(Exception e)
         {
-            redirect(view: 'index')
+            flash.message = "Username already exists!!!"
+            redirect(action: 'registration')
         }
     }
 
@@ -172,9 +174,9 @@ class UserController {
 
         def messages = sql.rows("SELECT * from message WHERE (receiver_id = " + sid + " OR receiver_id =" + params.id + ") AND (sender_id = " + sid + " OR sender_id = " + params.id + ") ORDER BY send_date DESC").toList()
 
-        messages.each {
-            println (it.filedata)
-        }
+//        messages.each {
+//            println (it.filedata)
+//        }
 
         def userS = DataUser.findById(sid)
         def userF = DataUser.findById(fid)
@@ -206,11 +208,19 @@ class UserController {
             def receiver = DataUser.findById(session.chatFriend)
             def fileUser = params.userFile
 //            println fileUser.getBytes()
-            messageService.createNewMessage(sender, receiver, params.message_body, fileUser.getBytes())
+            messageService.createNewMessage(sender, receiver, params.message_body, fileUser, fileUser.getBytes())
             redirect(action: 'allMessages', id: session.chatFriend)
         }
         else {
             redirect(action: 'allMessages', id: session.chatFriend)
         }
+    }
+    def downloadFile()
+    {
+        def userFile = Message.get(params.id)
+        response.setHeader("Content-disposition","attachment;filename="+userFile.filename)
+        response.outputStream << userFile.filedata
+        response.outputStream.flush()
+
     }
 }

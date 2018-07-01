@@ -59,6 +59,9 @@
         <g:select name="birthplace" from="['Zagreb', 'Split', 'Osijek', 'Rijeka', 'Other']"/>
 
     </div>
+    <div class="form-group">
+        <font color="red">${flash.message}</font>
+    </div>
     <label class="regBTN"><g:actionSubmit value="Register" class="regBtn" action="registerNewUser"></g:actionSubmit></label>
 </g:form>
 
