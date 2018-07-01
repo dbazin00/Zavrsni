@@ -58,6 +58,10 @@
             <label>Birthplace</label><br>
             <g:select name="birthplace" from="['Zagreb', 'Split', 'Osijek', 'Rijeka', 'Other']" value="${userProfile.birthplace}"/>
         </div>
+        <div class="form-group">
+            <label>Gender</label><br>
+            ${userProfile.gender}
+        </div>
 
         <label class="saveBTN"><g:actionSubmit value="Update profile" class="saveBtn" action="saveProfile"></g:actionSubmit></label>
     </g:form>

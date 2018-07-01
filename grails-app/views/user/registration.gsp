@@ -60,6 +60,14 @@
 
     </div>
     <div class="form-group">
+        <label for="gender">Gender</label><br>
+        <g:radioGroup name="gender"
+                      labels="['Female','Male']"
+                      values="['Female','Male']" value="Female">
+            <p>${it.radio} ${it.label} </p>
+        </g:radioGroup>
+    </div>
+    <div class="form-group">
         <font color="red">${flash.message}</font>
     </div>
     <label class="regBTN"><g:actionSubmit value="Register" class="regBtn" action="registerNewUser"></g:actionSubmit></label>

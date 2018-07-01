@@ -11,6 +11,7 @@ class DataUser {
     Date birthday
     Integer age
     String birthplace
+    String gender
     static constraints = {
         username(unique: true)
         mail(email: true)
@@ -19,5 +20,6 @@ class DataUser {
         password()
         birthday(date: true)
         birthplace(inList: ["Split", "Zagreb", "Rijeka", "Osijek", "Other"])
+        gender()
 }
 }

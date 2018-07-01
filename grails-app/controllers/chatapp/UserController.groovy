@@ -50,7 +50,7 @@ class UserController {
     def registerNewUser()
     {//new Date().parse("yyyy-MM-dd",params["birthday"])
         try {
-            dataUserService.registerUser(params.first_name, params.last_name, params.username, params.password, params.mail, new Date().parse("yyyy-MM-dd", params["birthday"]), params.birthplace)
+            dataUserService.registerUser(params.first_name, params.last_name, params.username, params.password, params.mail, new Date().parse("yyyy-MM-dd", params["birthday"]), params.birthplace, params.gender)
             redirect(view: 'index')
         }
         catch(Exception e)
@@ -207,7 +207,7 @@ class UserController {
             def sender = DataUser.findById(session.currentUserID)
             def receiver = DataUser.findById(session.chatFriend)
             def fileUser = params.userFile
-//            println fileUser.getBytes()
+//            println fileUser.getContentType()
             messageService.createNewMessage(sender, receiver, params.message_body, fileUser, fileUser.getBytes())
             redirect(action: 'allMessages', id: session.chatFriend)
         }
@@ -218,7 +218,9 @@ class UserController {
     def downloadFile()
     {
         def userFile = Message.get(params.id)
+
         response.setHeader("Content-disposition","attachment;filename="+userFile.filename)
+        response.contentType = 'application/pdf'
         response.outputStream << userFile.filedata
         response.outputStream.flush()
 
