@@ -18,6 +18,6 @@ class Message {
         receiver()
         read()
         filename(nullable: true)
-        filedata(maxSize: 1024 * 1024 * 20, nullable: true)
+        filedata(nullable: true)
     }
 }

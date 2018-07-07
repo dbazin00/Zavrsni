@@ -23,8 +23,7 @@
             float: right;
         }
         </style>
-
-
+        <title>Login</title>
     </head>
     <body>
 

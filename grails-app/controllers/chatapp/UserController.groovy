@@ -34,8 +34,6 @@ class UserController {
             flash.message = "Wrong username!!!"
             redirect(action: 'index')
         }
-
-
     }
 
     def logout () {
@@ -68,7 +66,7 @@ class UserController {
 
 
         //svi korisnici koji su razliciti od orijavljenog i search
-        def persons = DataUser.createCriteria().list (params) {
+        def persons = DataUser.createCriteria().list () {
             if (params.query) {
                 ilike("username", "%${params.query}%")
             }
@@ -85,6 +83,8 @@ class UserController {
 
     def userInformation()
     {
+        if(session.currentUserID == null)
+            redirect(view: 'index')
         try {
             if (session.currentUserID == null) {
                 redirect(view: 'index')
@@ -98,7 +98,7 @@ class UserController {
         }
     }
 
-    //update profila
+    //azuriranje profila
     def myProfile()
     {
         if(session.currentUserID == null)
@@ -137,7 +137,8 @@ class UserController {
         //trazenje zadnje poruke razgovora izmedu dva korisnika
         for(int i = 0; i < allUsers.size(); i++) {
 
-            def rows = sql.firstRow("SELECT * from message WHERE (receiver_id = " + sid + " OR receiver_id =" + allUsers[i].id + ") AND (sender_id = " + sid + " OR sender_id = " + allUsers[i].id + ") ORDER BY send_date DESC")
+            def rows = sql.firstRow("SELECT * from message WHERE (receiver_id = " + sid + " OR receiver_id ="
+                    + allUsers[i].id + ") AND (sender_id = " + sid + " OR sender_id = " + allUsers[i].id + ") ORDER BY send_date DESC")
             if(rows != null)
                 allConvers.add(rows)
         }
@@ -165,24 +166,21 @@ class UserController {
 
     def allMessages()
     {
+        if(session.currentUserID == null)
+            redirect(view: 'index')
         def sid = session.currentUserID
         session.chatFriend = params.id
         def fid = session.chatFriend
         def sql = new Sql(dataSource)
 
         //dohvacanje svih poruka izmedju dva korisnika
-
-        def messages = sql.rows("SELECT * from message WHERE (receiver_id = " + sid + " OR receiver_id =" + params.id + ") AND (sender_id = " + sid + " OR sender_id = " + params.id + ") ORDER BY send_date DESC").toList()
-
-//        messages.each {
-//            println (it.filedata)
-//        }
+        def messages = sql.rows("SELECT * from message WHERE (receiver_id = " + sid + " OR receiver_id ="
+                + params.id + ") AND (sender_id = " + sid + " OR sender_id = " + params.id + ") ORDER BY send_date DESC")
 
         def userS = DataUser.findById(sid)
         def userF = DataUser.findById(fid)
 
         //poruka procitana
-
         def messageRead = Message.findAllByReceiverAndSender(userS, userF)
         messageRead.each {
             it.read = true
@@ -203,26 +201,53 @@ class UserController {
 
     def sendMessage()
     {
+        if(session.currentUserID == null)
+            redirect(view: 'index')
         if(params.message_body != '') {
+
+
             def sender = DataUser.findById(session.currentUserID)
             def receiver = DataUser.findById(session.chatFriend)
-            def fileUser = params.userFile
-//            println fileUser.getContentType()
-            messageService.createNewMessage(sender, receiver, params.message_body, fileUser, fileUser.getBytes())
-            redirect(action: 'allMessages', id: session.chatFriend)
+            def fileUser = request.getFile("userFile").inputStream.getBytes()
+            def filename = request.getFile("userFile").getOriginalFilename()
+
+            try {
+                messageService.createNewMessage(sender, receiver, params.message_body, filename, fileUser)
+            }
+            catch (Exception e)
+            {
+            }
         }
-        else {
-            redirect(action: 'allMessages', id: session.chatFriend)
-        }
+        redirect(action: 'allMessages', id: session.chatFriend)
     }
     def downloadFile()
     {
-        def userFile = Message.get(params.id)
+        if(session.currentUserID == null)
+            redirect(view: 'index')
+        def mess = Message.get(params.id)
+        def userFile = mess.filedata
 
-        response.setHeader("Content-disposition","attachment;filename="+userFile.filename)
-        response.contentType = 'application/pdf'
-        response.outputStream << userFile.filedata
-        response.outputStream.flush()
+        response.setHeader("Content-disposition","attachment;filename="+mess.filename)
 
+        def outputStream = response.getOutputStream()
+        outputStream << userFile
+        outputStream.flush()
+        outputStream.close()
+    }
+
+    def deleteUser()
+    {
+        if(session.currentUserID == null)
+            redirect(view: 'index')
+        def sid = session.currentUserID
+        def user = DataUser.findById(sid)
+        def userMessages = Message.findAllByReceiverOrSender(user, user)
+
+        userMessages.each {
+            it.delete(flush: true)
+        }
+        user.delete(flush: true)
+        session.currentUserID = null
+        redirect(action: 'index')
     }
 }

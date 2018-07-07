@@ -21,5 +21,5 @@ class DataUser {
         birthday(date: true)
         birthplace(inList: ["Split", "Zagreb", "Rijeka", "Osijek", "Other"])
         gender()
-}
+    }
 }

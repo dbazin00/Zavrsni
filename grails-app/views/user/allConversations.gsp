@@ -1,6 +1,7 @@
 <html>
 <head>
     <meta name="layout" content="main">
+    <title>Conversation street</title>
     <style type="text/css">
         h1
         {

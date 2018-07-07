@@ -21,6 +21,7 @@
             padding-left: 30px;
         }
     </style>
+    <title>Registration</title>
 </head>
 <body>
 
@@ -56,20 +57,24 @@
     </div>
     <div class="form-group">
         <label for="birthplace">Birthplace</label><br>
-        <g:select name="birthplace" from="['Zagreb', 'Split', 'Osijek', 'Rijeka', 'Other']"/>
+        <g:select name="birthplace" from="['Zagreb', 'Split', 'Osijek', 'Rijeka', 'Other']" noSelection="['':'-Choose your birthplace-']" required="true" style="width:230px"/>
 
     </div>
     <div class="form-group">
         <label for="gender">Gender</label><br>
         <g:radioGroup name="gender"
                       labels="['Female','Male']"
-                      values="['Female','Male']" value="Female">
+                      values="['Female','Male']" required="true">
             <p>${it.radio} ${it.label} </p>
         </g:radioGroup>
     </div>
     <div class="form-group">
         <font color="red">${flash.message}</font>
     </div>
+    %{--<g:countrySelect name="countryCode"--}%
+                     %{--value="${DataUser?.birthplace}"--}%
+                     %{--noSelection="['':'-Choose your country-']"/>--}%
+
     <label class="regBTN"><g:actionSubmit value="Register" class="regBtn" action="registerNewUser"></g:actionSubmit></label>
 </g:form>
 

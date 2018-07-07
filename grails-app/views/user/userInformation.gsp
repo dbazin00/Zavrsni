@@ -13,6 +13,7 @@
     }
 
     </style>
+    <title>${userInf.username}</title>
 </head>
 <body>
 <br/>

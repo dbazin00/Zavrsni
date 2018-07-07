@@ -21,6 +21,7 @@
         padding-left: 30px;
     }
     </style>
+    <title>My profile: ${chatapp.DataUser.get(session.currentUserID).username}</title>
 </head>
 <body>
 
@@ -63,8 +64,16 @@
             ${userProfile.gender}
         </div>
 
-        <label class="saveBTN"><g:actionSubmit value="Update profile" class="saveBtn" action="saveProfile"></g:actionSubmit></label>
+        <label class="saveBTN"><g:actionSubmit value="Update profile" class="saveBtn" action="saveProfile"></g:actionSubmit>
+            <br><br>
+            <g:link action="deleteUser">
+                <input type="button" value="Delete profile" class="saveBtn" onclick="return confirm('Are you sure you want to delete your profile?')"/>
+            </g:link>
+        </label>
     </g:form>
+
+
+
 </form>
 </body>
 </html>

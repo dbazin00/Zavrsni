@@ -8,6 +8,7 @@
         font-weight: bold;
     }
     </style>
+    <title>User list</title>
 </head>
 <body>
 
