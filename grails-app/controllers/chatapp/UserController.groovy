@@ -48,7 +48,8 @@ class UserController {
     def registerNewUser()
     {//new Date().parse("yyyy-MM-dd",params["birthday"])
         try {
-            dataUserService.registerUser(params.first_name, params.last_name, params.username, params.password, params.mail, new Date().parse("yyyy-MM-dd", params["birthday"]), params.birthplace, params.gender)
+            dataUserService.registerUser(params.first_name, params.last_name, params.username,
+                    params.password, params.mail, new Date().parse("yyyy-MM-dd", params["birthday"]), params.birthplace, params.gender)
             redirect(view: 'index')
         }
         catch(Exception e)
@@ -66,7 +67,7 @@ class UserController {
 
 
         //svi korisnici koji su razliciti od orijavljenog i search
-        def persons = DataUser.createCriteria().list () {
+        def persons = DataUser.createCriteria().list (params) {
             if (params.query) {
                 ilike("username", "%${params.query}%")
             }
